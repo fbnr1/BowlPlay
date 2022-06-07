@@ -13,8 +13,8 @@ public class GameTest {
   @BeforeEach
   void setUp() {
     game = new Game();
-    Player playerOne = new Player("robert");
-    Player playerTwo = new Player("matthias");
+    Player playerOne = new Player("Robert");
+    Player playerTwo = new Player("Matthias");
   }
 
   @Test
