@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameTest {
-    // testmethode_Scenario_erweiterteVerhalten
+    Game game;
 
     @BeforeEach
     void setUp() {
-        Game game = new Game();
+        game = new Game();
         Player playerOne = new Player("robert");
         Player playerTwo = new Player("matthias");
     }
