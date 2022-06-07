@@ -4,16 +4,18 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 
 public class GameTest {
-    Game game;
+  Game game;
 
-    @BeforeEach
-    void setUp() {
-        game = new Game();
-        Player playerOne = new Player("robert");
-        Player playerTwo = new Player("matthias");
-    }
+  @BeforeEach
+  void setUp() {
+    game = new Game();
+    Player playerOne = new Player("robert");
+    Player playerTwo = new Player("matthias");
+  }
 
   @Test
   void gameIsCreatedCorrectlyAndRollsCanBePerformed() {
@@ -32,9 +34,9 @@ public class GameTest {
     assertThatExceptionOfType(Exception.class).isThrownBy(() -> game.roll(11));
   }
 
-    @Test
-    void checkAllPinsFavor_ThrowIsStrike_10PinsFavor(){
-        boolean isStrike = Throw.checkAllPinsFavor(10);
-        assertThat(isStrike).isTrue();
-    }
+  @Test
+  void checkAllPinsFavor_ThrowIsStrike_10PinsFavor() {
+    boolean isStrike = Throw.checkAllPinsFavor(10);
+    assertThat(isStrike).isTrue();
+  }
 }
