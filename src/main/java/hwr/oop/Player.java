@@ -2,9 +2,10 @@ package hwr.oop;
 
 public class Player {
 
-    private int favorPins = 34;
+    private int favorPins = 0;
     private String nameOfPlayer;
     private int score = 0;
+    private int quantityOfPlayer = 0;
 
     public Player(String nameOfPlayer){
         this.nameOfPlayer = nameOfPlayer;
