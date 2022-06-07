@@ -3,15 +3,17 @@ package hwr.oop;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameTest {
-  Game game;
+    Game game;
 
-  @BeforeEach
-  void instatiateGame() {
-    game = new Game();
-  }
+    @BeforeEach
+    void setUp() {
+        game = new Game();
+        Player playerOne = new Player("robert");
+        Player playerTwo = new Player("matthias");
+    }
 
   @Test
   void gameIsCreatedCorrectlyAndRollsCanBePerformed() {
@@ -30,4 +32,9 @@ public class GameTest {
     assertThatExceptionOfType(Exception.class).isThrownBy(() -> game.roll(11));
   }
 
+    @Test
+    void checkAllPinsFavor_ThrowIsStrike_10PinsFavor(){
+        boolean isStrike = Throw.checkAllPinsFavor(10);
+        assertThat(isStrike).isTrue();
+    }
 }
