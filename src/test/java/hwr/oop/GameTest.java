@@ -7,14 +7,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameTest {
     Game game;
+    Player playerOne;
+    Player playerTwo;
 
     @BeforeEach
     void setUp() {
         game = new Game();
-        Player playerOne = new Player("robert");
-        Player playerTwo = new Player("matthias");
+        playerOne = new Player("robert");
+        playerTwo = new Player("matthias");
     }
-
+    @Test
+    void countScore_3ThrowsOfBothPlayer_ScoreIs11And15(){
+        playerOne.countScore(2);
+        playerOne.countScore(4);
+        playerTwo.countScore(7);
+        playerTwo.countScore(3);
+        int scorePlayerOne = playerOne.countScore(5);
+        int scorePlayerTwo = playerTwo.countScore(5);
+        assertThat(scorePlayerOne).isEqualTo(11);
+        assertThat(scorePlayerTwo).isEqualTo(15);
+    }
     @Test
     void getFavorPins_ThrowIsStrike_10PinsFavor(){
         int favorPins = Throw.getFavorPins(3);
@@ -40,11 +52,11 @@ public class GameTest {
         boolean favorTwelvePins = Throw.checkQuantityOfFavorPins(12);
         assertThat(favorTwelvePins).isFalse();
     }
-    @Test
+    /*@Test
     void countScore_TwoThrows_ScoreIs7(){
         int firstRoll = Player.countScore(4);
         int secondRoll = Player.countScore(3);
         assertThat(firstRoll).isEqualTo(4);
         assertThat(secondRoll).isEqualTo(7);
-    }
+    }*/
 }

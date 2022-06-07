@@ -2,9 +2,10 @@ package hwr.oop;
 
 public class Player {
 
-    private int favorPins = 34;
+    private int favorPins = 0;
     private String nameOfPlayer;
-    private static int score = 0;
+    private int score = 0;
+    private int quantityOfPlayer = 0;
 
     public Player(String nameOfPlayer){
         this.nameOfPlayer = nameOfPlayer;
@@ -13,7 +14,7 @@ public class Player {
     public String getNameOfPlayer(String nameOfPlayer){
         return nameOfPlayer;
     }
-    public static int countScore(int favorPins){
+    public int countScore(int favorPins){
         score = score + favorPins;
         return score;
     }
