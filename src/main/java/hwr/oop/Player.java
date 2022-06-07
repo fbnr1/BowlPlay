@@ -4,7 +4,7 @@ public class Player {
 
     private int favorPins = 34;
     private String nameOfPlayer;
-    private int score = 0;
+    private static int score = 0;
 
     public Player(String nameOfPlayer){
         this.nameOfPlayer = nameOfPlayer;
@@ -13,7 +13,7 @@ public class Player {
     public String getNameOfPlayer(String nameOfPlayer){
         return nameOfPlayer;
     }
-    public int countScore(int favorPins){
+    public static int countScore(int favorPins){
         score = score + favorPins;
         return score;
     }
