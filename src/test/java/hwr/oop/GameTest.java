@@ -6,16 +6,31 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameTest {
-    // testmethode_Scenario_erweiterteVerhalten
+    Game game;
 
     @BeforeEach
     void setUp() {
-        Game game = new Game();
+        game = new Game();
         Player playerOne = new Player("robert");
         Player playerTwo = new Player("matthias");
-
     }
 
+  @Test
+  void gameIsCreatedCorrectlyAndRollsCanBePerformed() {
+    assertThat(game).isNotEqualTo(null);
+
+    assertThatNoException().isThrownBy(() -> {
+      game.roll(0);
+      game.roll(1);
+      game.roll(10);
+    });
+  }
+
+  @Test
+  void cannotHitLessThanZeroOrMoreThanTenPins() {
+    assertThatExceptionOfType(Exception.class).isThrownBy(() -> game.roll(-1));
+    assertThatExceptionOfType(Exception.class).isThrownBy(() -> game.roll(11));
+  }
 
     @Test
     void checkAllPinsFavor_ThrowIsStrike_10PinsFavor(){
