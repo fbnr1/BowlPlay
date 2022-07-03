@@ -4,16 +4,11 @@ import java.util.ArrayList;
 
 public class ScoreCalculator {
   public static int calculateCurrentScore(ArrayList<Frame> frames) {
-    int[] knockedDownPins = convertFramesToPins(frames);
+    int[] knockedDownPins = convertFramesToPinsArray(frames);
     int totalScore = 0;
+    int frameScore;
 
     for (int i = 0; i < knockedDownPins.length; i++) {
-      int frameScore = 0;
-      /*if(i >= 3 && frameScore != 10){
-        if(knockedDownPins[i - 3] == 10){
-          totalScore += knockedDownPins[i];
-        }
-      }*/
       // is strike?
       if (knockedDownPins[i] == 10) {
         try {
@@ -28,6 +23,7 @@ public class ScoreCalculator {
         // is second throw of frame?
       } else if (i % 2 == 1 && knockedDownPins[i - 1] != 10) {
         frameScore = knockedDownPins[i] + knockedDownPins[i - 1];
+        // is spare?
         if (frameScore == 10) {
           try {
             totalScore += knockedDownPins[i + 1];
@@ -53,8 +49,8 @@ public class ScoreCalculator {
     }*/
   }
 
-  private static int[] convertFramesToPins(ArrayList<Frame> frames) {
-    int[] knockedDownPins = frames.size() != 10 ?  new int[frames.size() * 2] : new int[frames.size() * 2 + 1]; // todo nicht hardcoden
+  private static int[] convertFramesToPinsArray(ArrayList<Frame> frames) {
+    int[] knockedDownPins = frames.size() != 10 ?  new int[frames.size() * 2] : new int[frames.size() * 2 + 1]; // todo maxsize (10) nicht hardcoden
     int counter = 0;
 
     for (Frame frame : frames) {
@@ -67,7 +63,7 @@ public class ScoreCalculator {
     return knockedDownPins;
   }
 
-  public static int getCurrentScore2(ArrayList<Frame> frames) {
+ /* public static int getCurrentScore2(ArrayList<Frame> frames) {
     ArrayList<Integer> thrownPins2 = convertFramesToPins2(frames);
     // todo : fehler wenn einer der letzten beiden Würfe ein Strike war
     int totalScore = 0;
@@ -103,7 +99,7 @@ public class ScoreCalculator {
     }
 
     return knockedDownPins;
-  }
+  }*/
 
   /*public static void roll(int knockedDownPins) {
     if (knockedDownPins == 10) {
