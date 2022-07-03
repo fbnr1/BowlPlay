@@ -77,7 +77,7 @@ class PlayerTest {
   }
 
   @Test
-  void getCurrentScore_someSparesAndStrikes_scoreIsReturnedCorrectly() {
+  void getCurrentScore_someSparesAndStrikes_scoreIsCalculatedCorrectly() {
     //playerOne.resetFrames();
     playerOne.roll(5);
     playerOne.roll(2);
@@ -124,13 +124,13 @@ class PlayerTest {
     playerOne.roll(10);
     assertEquals(97, playerOne.getCurrentScore());
     playerOne.roll(10);
-    assertEquals(117, playerOne.getCurrentScore());
+    assertEquals(127, playerOne.getCurrentScore());
     playerOne.roll(2);
     playerOne.roll(4);
-    assertEquals(129, playerOne.getCurrentScore());
+    assertEquals(141, playerOne.getCurrentScore());
     playerOne.roll(2);
     playerOne.roll(4);
-    assertEquals(135, playerOne.getCurrentScore());
+    assertEquals(147, playerOne.getCurrentScore());
 
   }
 
@@ -140,20 +140,20 @@ class PlayerTest {
     playerOne.roll(10);
     assertEquals(10, playerOne.getCurrentScore());
     playerOne.roll(10);
-    assertEquals(30, playerOne.getCurrentScore());
+    assertEquals(20, playerOne.getCurrentScore());
     playerOne.roll(10);
     assertEquals(50, playerOne.getCurrentScore());
     playerOne.roll(10);
     assertEquals(80, playerOne.getCurrentScore());
     playerOne.roll(2);
     playerOne.roll(6);
-    assertEquals(106, playerOne.getCurrentScore());
+    assertEquals(98, playerOne.getCurrentScore());
     playerOne.roll(2);
     playerOne.roll(3);
-    assertEquals(111, playerOne.getCurrentScore());
+    assertEquals(103, playerOne.getCurrentScore());
     playerOne.roll(2);
     playerOne.roll(1);
-    assertEquals(114, playerOne.getCurrentScore());
+    assertEquals(106, playerOne.getCurrentScore());
 
   }
 

@@ -9,17 +9,31 @@ public class ScoreCalculator {
 
     for (int i = 0; i < knockedDownPins.length; i++) {
       int frameScore = 0;
-      if(i >= 3 && frameScore != 10){
-        if(knockedDownPins[i -3] == 10){
+      /*if(i >= 3 && frameScore != 10){
+        if(knockedDownPins[i - 3] == 10){
           totalScore += knockedDownPins[i];
         }
-      }
+      }*/
+      // is strike?
       if (knockedDownPins[i] == 10) {
-        totalScore += knockedDownPins[i + 1]; // + knockedDownPins[i + 2];
-      } else if (i % 2 == 1) {
+        try {
+          totalScore += knockedDownPins[i + 2];
+          if (knockedDownPins[i + 2] == 10)
+            totalScore += knockedDownPins[i + 4];
+          else
+            totalScore += knockedDownPins[i + 3];
+        }
+        catch (ArrayIndexOutOfBoundsException ignored) {
+        }
+        // is second throw of frame?
+      } else if (i % 2 == 1 && knockedDownPins[i - 1] != 10) {
         frameScore = knockedDownPins[i] + knockedDownPins[i - 1];
         if (frameScore == 10) {
-          totalScore += knockedDownPins[i + 1];
+          try {
+            totalScore += knockedDownPins[i + 1];
+          }
+          catch (ArrayIndexOutOfBoundsException ignored) {
+          }
         }
       }
       totalScore += knockedDownPins[i];
@@ -40,7 +54,7 @@ public class ScoreCalculator {
   }
 
   private static int[] convertFramesToPins(ArrayList<Frame> frames) {
-    int[] knockedDownPins = frames.size() != 10 ?  new int[frames.size() * 2 + 1] : new int[frames.size() * 2 + 2]; // todo nicht hardcoden
+    int[] knockedDownPins = frames.size() != 10 ?  new int[frames.size() * 2] : new int[frames.size() * 2 + 1]; // todo nicht hardcoden
     int counter = 0;
 
     for (Frame frame : frames) {
@@ -55,14 +69,12 @@ public class ScoreCalculator {
 
   public static int getCurrentScore2(ArrayList<Frame> frames) {
     ArrayList<Integer> thrownPins2 = convertFramesToPins2(frames);
-    boolean wasStrike = false;
     // todo : fehler wenn einer der letzten beiden Würfe ein Strike war
     int totalScore = 0;
 
     for (int throwNumber = 0; throwNumber < thrownPins2.size(); throwNumber++) {
       if (thrownPins2.get(throwNumber) == 10) {
         totalScore += thrownPins2.get(throwNumber + 1) + thrownPins2.get(throwNumber + 2);
-        wasStrike = true;
       } else if (throwNumber % 2 == 1) {
         int frameScore = thrownPins2.get(throwNumber) + thrownPins2.get(throwNumber - 1);
         if (frameScore == 10) {

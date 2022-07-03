@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 public final class Frame {
   private       int             maxRolls;
-  private       int             id;
+  private final int             id;
   private final ArrayList<Roll> rolls    = new ArrayList<>();
   private       boolean         finished = false;
 
