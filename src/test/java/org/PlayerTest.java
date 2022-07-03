@@ -9,23 +9,23 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 
 class PlayerTest {
-  Player player1;
+  Player playerOne;
 
   @BeforeEach
   void createPlayer() {
-    player1 = new Player("Tom");
+    playerOne = new Player("Tom");
   }
 
   @Test
   void getName_nameIsReturnedCorrectly() {
-    assertEquals(player1.getName(), "Tom");
+    assertEquals(playerOne.getName(), "Tom");
   }
 
   @Test
   void roll_CannotKnockDownMoreThanTenPins() {
     try {
       // todo FabianR : add Tests and fix code
-      player1.roll(11);
+      playerOne.roll(11);
       fail("No error if player knocks down more than 10 pins");
     } catch (IllegalArgumentException e) {
       e.printStackTrace();
@@ -35,7 +35,7 @@ class PlayerTest {
   @Test
   void roll_CannotKnockDownLessThanZeroPins() {
     try {
-      player1.roll(-1);
+      playerOne.roll(-1);
       fail("No error if player knocks down less than 0 pins");
     } catch (IllegalArgumentException e) {
       e.printStackTrace();
@@ -44,58 +44,118 @@ class PlayerTest {
 
   @Test
   void getCurrentScore_noSparesOrStrikes_scoreIsReturnedCorrectly() {
-    player1.roll(5);
-    player1.roll(2);
-    assertEquals(7, player1.getCurrentScore());
-    player1.roll(3);
-    player1.roll(5);
-    assertEquals(15, player1.getCurrentScore());
-    player1.roll(2);
-    player1.roll(0);
-    assertEquals(17, player1.getCurrentScore());
-    player1.roll(9);
-    player1.roll(0);
-    assertEquals(26, player1.getCurrentScore());
-    player1.roll(1);
-    player1.roll(2);
-    assertEquals(29, player1.getCurrentScore());
-    player1.roll(2);
-    player1.roll(6);
-    assertEquals(37, player1.getCurrentScore());
-    player1.roll(7);
-    player1.roll(2);
-    assertEquals(46, player1.getCurrentScore());
-    player1.roll(4);
-    player1.roll(5);
-    assertEquals(55, player1.getCurrentScore());
-    player1.roll(4);
-    player1.roll(8);
-    assertEquals(67, player1.getCurrentScore());
-    player1.roll(0);
-    player1.roll(6);
-    assertEquals(73, player1.getCurrentScore());
+    playerOne.roll(5);
+    playerOne.roll(2);
+    assertEquals(7, playerOne.getCurrentScore());
+    playerOne.roll(3);
+    playerOne.roll(5);
+    assertEquals(15, playerOne.getCurrentScore());
+    playerOne.roll(2);
+    playerOne.roll(0);
+    assertEquals(17, playerOne.getCurrentScore());
+    playerOne.roll(9);
+    playerOne.roll(0);
+    assertEquals(26, playerOne.getCurrentScore());
+    playerOne.roll(1);
+    playerOne.roll(2);
+    assertEquals(29, playerOne.getCurrentScore());
+    playerOne.roll(2);
+    playerOne.roll(6);
+    assertEquals(37, playerOne.getCurrentScore());
+    playerOne.roll(7);
+    playerOne.roll(2);
+    assertEquals(46, playerOne.getCurrentScore());
+    playerOne.roll(4);
+    playerOne.roll(5);
+    assertEquals(55, playerOne.getCurrentScore());
+    playerOne.roll(4);
+    playerOne.roll(8);
+    assertEquals(67, playerOne.getCurrentScore());
+    playerOne.roll(0);
+    playerOne.roll(6);
+    assertEquals(73, playerOne.getCurrentScore());
   }
 
   @Test
   void getCurrentScore_someSparesAndStrikes_scoreIsReturnedCorrectly() {
-    //player1.resetFrames();
-    player1.roll(5);
-    player1.roll(2);
-    assertEquals(7, player1.getCurrentScore());
-    player1.roll(5);
-    player1.roll(5);
-    assertEquals(17, player1.getCurrentScore());
-    player1.roll(3);
-    assertEquals(23, player1.getCurrentScore());
-    player1.roll(3);
-    assertEquals(26, player1.getCurrentScore());
-    player1.roll(10);
-    assertEquals(36, player1.getCurrentScore());
-    player1.roll(4);
-    player1.roll(3);
-    assertEquals(50, player1.getCurrentScore());
+    //playerOne.resetFrames();
+    playerOne.roll(5);
+    playerOne.roll(2);
+    assertEquals(7, playerOne.getCurrentScore());
+    playerOne.roll(5);
+    playerOne.roll(5);
+    assertEquals(17, playerOne.getCurrentScore());
+    playerOne.roll(3);
+    assertEquals(23, playerOne.getCurrentScore());
+    playerOne.roll(3);
+    assertEquals(26, playerOne.getCurrentScore());
+    playerOne.roll(10);
+    assertEquals(36, playerOne.getCurrentScore());
+    playerOne.roll(4);
+    playerOne.roll(0);
+    assertEquals(44, playerOne.getCurrentScore());
+    playerOne.roll(4);
+    playerOne.roll(0);
+    assertEquals(48, playerOne.getCurrentScore());
+
   }
 
+  @Test
+  void getCurrentScore_someStrikes_scoreIsCalculatedCorrectly(){
+    playerOne.roll(10);
+    assertEquals(10, playerOne.getCurrentScore());
+    playerOne.roll(1);
+    assertEquals(12, playerOne.getCurrentScore()); //Fehler: Gibt 13 zurück, weil der 3 Wurf schon beim 2 eingerechnet wird
+    playerOne.roll(2);
+    assertEquals(16, playerOne.getCurrentScore());
+  }
+
+  @Test
+  void getCurrentScore_fiveStrikesInARow_scoreIsCalculatedCorrectly(){
+    playerOne.roll(3);
+    playerOne.roll(4);
+    assertEquals(7, playerOne.getCurrentScore());
+    playerOne.roll(10);
+    assertEquals(17, playerOne.getCurrentScore());
+    playerOne.roll(10);
+    assertEquals(37, playerOne.getCurrentScore());
+    playerOne.roll(10);
+    assertEquals(67, playerOne.getCurrentScore());
+    playerOne.roll(10);
+    assertEquals(97, playerOne.getCurrentScore());
+    playerOne.roll(10);
+    assertEquals(117, playerOne.getCurrentScore());
+    playerOne.roll(2);
+    playerOne.roll(4);
+    assertEquals(129, playerOne.getCurrentScore());
+    playerOne.roll(2);
+    playerOne.roll(4);
+    assertEquals(135, playerOne.getCurrentScore());
+
+  }
+
+  @Test
+  void getCurrentScore_SpareAndThenStrike_scoreIsCalculatedCorrectly(){
+    playerOne.roll(0);
+    playerOne.roll(10);
+    assertEquals(10, playerOne.getCurrentScore());
+    playerOne.roll(10);
+    assertEquals(30, playerOne.getCurrentScore());
+    playerOne.roll(10);
+    assertEquals(50, playerOne.getCurrentScore());
+    playerOne.roll(10);
+    assertEquals(80, playerOne.getCurrentScore());
+    playerOne.roll(2);
+    playerOne.roll(6);
+    assertEquals(106, playerOne.getCurrentScore());
+    playerOne.roll(2);
+    playerOne.roll(3);
+    assertEquals(111, playerOne.getCurrentScore());
+    playerOne.roll(2);
+    playerOne.roll(1);
+    assertEquals(114, playerOne.getCurrentScore());
+
+  }
 
 }
 

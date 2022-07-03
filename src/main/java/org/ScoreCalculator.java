@@ -8,10 +8,16 @@ public class ScoreCalculator {
     int totalScore = 0;
 
     for (int i = 0; i < knockedDownPins.length; i++) {
+      int frameScore = 0;
+      if(i >= 3 && frameScore != 10){
+        if(knockedDownPins[i -3] == 10){
+          totalScore += knockedDownPins[i];
+        }
+      }
       if (knockedDownPins[i] == 10) {
-        totalScore += knockedDownPins[i + 1] + knockedDownPins[i + 2];
+        totalScore += knockedDownPins[i + 1]; // + knockedDownPins[i + 2];
       } else if (i % 2 == 1) {
-        int frameScore = knockedDownPins[i] + knockedDownPins[i - 1];
+        frameScore = knockedDownPins[i] + knockedDownPins[i - 1];
         if (frameScore == 10) {
           totalScore += knockedDownPins[i + 1];
         }
@@ -19,6 +25,18 @@ public class ScoreCalculator {
       totalScore += knockedDownPins[i];
     }
     return totalScore;
+    /*
+    for (int aktuellerWurf = 0; aktuellerWurf < knockedDownPins.length; aktuellerWurf++){
+      if (knockedDownPins[aktuellerWurf] == 10);
+      if (knockedDownPins[aktuellerWurf - 2] == 10){
+        knockedDownPins[aktuellerWurf - 2] += knockedDownPins[aktuellerWurf];
+        totalScore += knockedDownPins[aktuellerWurf];
+      }
+      if (knockedDownPins[aktuellerWurf - 3] == 10){
+        knockedDownPins[aktuellerWurf - 3] += knockedDownPins[aktuellerWurf];
+        knockedDownPins[aktuellerWurf - 2] += knockedDownPins[aktuellerWurf - 2];
+      }
+    }*/
   }
 
   private static int[] convertFramesToPins(ArrayList<Frame> frames) {
@@ -37,11 +55,14 @@ public class ScoreCalculator {
 
   public static int getCurrentScore2(ArrayList<Frame> frames) {
     ArrayList<Integer> thrownPins2 = convertFramesToPins2(frames);
+    boolean wasStrike = false;
     // todo : fehler wenn einer der letzten beiden Würfe ein Strike war
     int totalScore = 0;
+
     for (int throwNumber = 0; throwNumber < thrownPins2.size(); throwNumber++) {
       if (thrownPins2.get(throwNumber) == 10) {
         totalScore += thrownPins2.get(throwNumber + 1) + thrownPins2.get(throwNumber + 2);
+        wasStrike = true;
       } else if (throwNumber % 2 == 1) {
         int frameScore = thrownPins2.get(throwNumber) + thrownPins2.get(throwNumber - 1);
         if (frameScore == 10) {

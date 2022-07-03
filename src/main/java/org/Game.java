@@ -15,7 +15,7 @@ public class Game {
   }
 
   boolean hasValidAmountOfPlayers(){
-    return players.size() > 0 && players.size() < MAX_PLAYERS;
+    return players.size() > 0 && players.size() <= MAX_PLAYERS;
   }
 
 /*  void gameRythm(){
