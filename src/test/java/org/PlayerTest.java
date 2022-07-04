@@ -24,7 +24,6 @@ class PlayerTest {
   @Test
   void roll_CannotKnockDownMoreThanTenPins() {
     try {
-      // todo FabianR : add Tests and fix code
       playerOne.roll(11);
       fail("No error if player knocks down more than 10 pins");
     } catch (IllegalArgumentException e) {
@@ -78,7 +77,6 @@ class PlayerTest {
 
   @Test
   void getCurrentScore_someSparesAndStrikes_scoreIsCalculatedCorrectly() {
-    //playerOne.resetFrames();
     playerOne.roll(5);
     playerOne.roll(2);
     assertEquals(7, playerOne.getCurrentScore());
@@ -105,7 +103,7 @@ class PlayerTest {
     playerOne.roll(10);
     assertEquals(10, playerOne.getCurrentScore());
     playerOne.roll(1);
-    assertEquals(12, playerOne.getCurrentScore()); //Fehler: Gibt 13 zurück, weil der 3 Wurf schon beim 2 eingerechnet wird
+    assertEquals(12, playerOne.getCurrentScore());
     playerOne.roll(2);
     assertEquals(16, playerOne.getCurrentScore());
   }
@@ -154,7 +152,6 @@ class PlayerTest {
     playerOne.roll(2);
     playerOne.roll(1);
     assertEquals(106, playerOne.getCurrentScore());
-
   }
 
 }

@@ -23,53 +23,32 @@ public class Player{
     return name;
   }
 
-  /*public int getCurrentScore() {
-    int totalScore = 0;
-    for (int throwNumber = 0; throwNumber < thrownPins.size(); throwNumber++) {
-      if (thrownPins.get(throwNumber) == 10) {
-        totalScore += thrownPins.get(throwNumber + 1) + thrownPins.get(throwNumber + 2);
-      } else if (throwNumber % 2 == 1) {
-        int frameScore = thrownPins.get(throwNumber) + thrownPins.get(throwNumber - 1);
-        if (frameScore == 10) {
-          totalScore += thrownPins.get(throwNumber + 1);
-        }
-      }
-      totalScore += thrownPins.get(throwNumber);
-    }
-    return totalScore;
-  }*/
-
   public int getCurrentScore() {
     return ScoreCalculator.calculateCurrentScore(frames);
   }
 
   public void roll(int knockedDownPins){
-    if (isEveryFrameFinished()) {
+    if (isLastFrameFinished()) {
       startNextFrame();
     }
     frames.get(frames.size() - 1).addRoll(knockedDownPins);
   }
 
-  public void resetFrames() {
-    frames.clear();
-  }
-
   private void startNextFrame() {
     if (frames.size() < TOTAL_FRAMES) {
-      if (isEveryFrameFinished()) {
         if (frames.size() == TOTAL_FRAMES - 1)
-          frames.add(new Frame(10, 3));
+          frames.add(new Frame(TOTAL_FRAMES, 3));
         else
           frames.add(new Frame(frames.size() + 1, 2));
-      } else
+    } else
         throw new PreviousFrameNotFinishedException("You need to finish the previous frame before starting a new one");
-    }
   }
 
-  private boolean isEveryFrameFinished() {
-    for (Frame frame : frames)
+  private boolean isLastFrameFinished() {
+    /*for (Frame frame : frames)
       if(!frame.isFinished())
         return false;
-    return true;
+    return true;*/
+    return frames.get(frames.size() - 1).isFinished();
   }
 }

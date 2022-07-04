@@ -1,10 +1,9 @@
 package org;
 
 public final class Roll {
-  private final int id; // todo rename or remove
+  private final int id; // todo rename / remove?
   private final int knockedDownPins;
 
-  // todo rename to throw??
   public Roll(int id, int knockedDownPins) {
     int MAX_PINS = 10;
     this.id = id;
