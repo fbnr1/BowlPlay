@@ -49,6 +49,6 @@ public class Player{
       if(!frame.isFinished())
         return false;
     return true;*/
-    return frames.get(frames.size() - 1).isFinished();
+    return frames.size() <= 0 || frames.get(frames.size() - 1).isFinished();
   }
 }
