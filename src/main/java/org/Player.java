@@ -1,7 +1,5 @@
 package org;
 
-import org.exceptions.PreviousFrameNotFinishedException;
-
 import java.util.ArrayList;
 
 public class Player{
@@ -39,10 +37,10 @@ public class Player{
         if (frames.size() == TOTAL_FRAMES - 1)
           frames.add(new Frame(TOTAL_FRAMES, 3));
         else
-          frames.add(new Frame(frames.size() + 1, 2));
-    } else
-        throw new PreviousFrameNotFinishedException("You need to finish the previous frame before starting a new one");
+          frames.add(new Frame(frames.size() + 1));
+    }
   }
+  // todo FabianR : reset frames
 
   private boolean isLastFrameFinished() {
     /*for (Frame frame : frames)
