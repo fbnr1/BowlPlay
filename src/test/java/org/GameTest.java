@@ -61,5 +61,20 @@ class GameTest {
     }
     game.start();
   }
+
+  @Test
+  void addPlayer_addPlayerAfterGameHasStarted_exceptionIsThrown() {
+    game.addPlayer("Tom");
+    game.start();
+
+    try {
+      game.addPlayer("Max");
+      fail("It shouldn't be possible to add players after the game has started");
+    } catch (UnsupportedOperationException e ) {
+      e.printStackTrace();
+    }
+  }
+
+
 }
 

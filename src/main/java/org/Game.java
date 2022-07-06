@@ -31,10 +31,6 @@ public class Game {
       throw new UnsupportedOperationException("Can't add player after game has started");
   }
 
-  private boolean hasValidAmountOfPlayers(){
-    return players.size() > 0 && players.size() <= MAX_PLAYERS;
-  }
-
   public void roll(int knockedDownPins) {
     if(!isGameOver()) {
       if (currentPlayer.isLastFrameFinished() && firstRound) {
@@ -59,5 +55,9 @@ public class Game {
 
   public LinkedList<Player> getPlayers() {
     return players;
+  }
+
+  private boolean hasValidAmountOfPlayers(){
+    return players.size() > 0 && players.size() <= MAX_PLAYERS;
   }
 }
