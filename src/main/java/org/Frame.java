@@ -72,7 +72,7 @@ public final class Frame {
   }
 
   private boolean isLastRollOfFrame() {
-    return ((rolls.size() == 2 && id != 10) || rolls.size() == 3);
+    return ((rolls.size() == 2 && maxRolls == 2) || rolls.size() == 3 && maxRolls == 3 || (maxRolls == 3 && rolls.size() == 2 && !isSpare() && !isStrike() ));
   }
 }
 
