@@ -1,5 +1,7 @@
 package org;
 
+import org.exceptions.GameIsOverException;
+
 import java.util.LinkedList;
 
 public class Game {
@@ -7,39 +9,55 @@ public class Game {
   LinkedList<Player> players = new LinkedList<>();
   Player             currentPlayer;
   boolean firstRound;
-  
+  boolean gameStarted = false;
+
+  public void start() {
+    if (hasValidAmountOfPlayers()) {
+      gameStarted = true;
+      currentPlayer = players.get(0);
+    }
+    else
+      throw new UnsupportedOperationException("Can't start game with less than 1 ore more than " + MAX_PLAYERS + " players");
+  }
+
   public void addPlayer(String name) {
     addPlayer(new Player(name));
   }
 
   public void addPlayer(Player player) {
-    players.add(player);
+    if (!gameStarted)
+      players.add(player);
+    else
+      throw new UnsupportedOperationException("Can't add player after game has started");
   }
 
-  boolean hasValidAmountOfPlayers(){
+  private boolean hasValidAmountOfPlayers(){
     return players.size() > 0 && players.size() <= MAX_PLAYERS;
   }
 
   public void roll(int knockedDownPins) {
-    if (currentPlayer.isLastFrameFinished() && firstRound) {
-      int currentIndex = players.indexOf(currentPlayer);
-      currentPlayer = currentIndex + 1 >= players.size() ? players.get(0) : players.get(currentIndex + 1);
-    }
-    currentPlayer.roll(knockedDownPins);
-    System.out.println(currentPlayer.getName() + " (" + currentPlayer.getCurrentRollNumber() + "): " + knockedDownPins);
-    firstRound = true;
+    if(!isGameOver()) {
+      if (currentPlayer.isLastFrameFinished() && firstRound) {
+        int currentIndex = players.indexOf(currentPlayer);
+        currentPlayer = currentIndex + 1 >= players.size() ? players.get(0) : players.get(currentIndex + 1);
+      }
+      currentPlayer.roll(knockedDownPins);
+      firstRound = true;
+    } else
+      throw new GameIsOverException();
   }
 
-  boolean isGameOver(){
-    return false;
-  }
+  public boolean isGameOver(){
+    boolean gameOver = false;
 
-  public void start() {
-    try {
-      currentPlayer = players.get(0);
-    } catch (IndexOutOfBoundsException e) {
-      throw new UnsupportedOperationException();
+    for (Player player : players) {
+      gameOver = gameOver || player.isGameFinished();
     }
 
+    return  gameOver;
+  }
+
+  public LinkedList<Player> getPlayers() {
+    return players;
   }
 }

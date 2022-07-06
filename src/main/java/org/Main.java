@@ -84,15 +84,13 @@ public class Main {
         game.roll(4);
 
         game.roll(2);
-        game.roll(3);
+        game.roll(8);
+
+        game.roll(2);
 
         game.roll(10);
 
         game.roll(3);
-
-        game.roll(2);
-
-
 
         System.out.println(player.getName() + ": " + player.getCurrentScore());
         System.out.println(player2.getName() + ": " + player2.getCurrentScore());

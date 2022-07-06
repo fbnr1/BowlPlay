@@ -41,6 +41,14 @@ public class Player{
     frames.get(frames.size() - 1).addRoll(knockedDownPins);
   }
 
+  public boolean isLastFrameFinished() {
+    return frames.size() == 0 || frames.get(frames.size() - 1).isFinished();
+  }
+
+  public boolean isGameFinished() {
+    return getCurrentScore() == TOTAL_FRAMES && isLastFrameFinished();
+  }
+
   private void startNextFrame() {
     if (frames.size() < TOTAL_FRAMES) {
         if (frames.size() == TOTAL_FRAMES - 1)
@@ -48,10 +56,5 @@ public class Player{
         else
           frames.add(new Frame(false));
     }
-  }
-  // todo FabianR : reset frames
-
-  public boolean isLastFrameFinished() {
-    return frames.size() == 0 || frames.get(frames.size() - 1).isFinished();
   }
 }
