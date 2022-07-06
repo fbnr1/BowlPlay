@@ -4,21 +4,19 @@ package org;
 import java.util.ArrayList;
 
 public final class Frame {
-  private       int             maxRolls;
-  private final int             id;
+  private final boolean lastFrame;
   private final ArrayList<Roll> rolls    = new ArrayList<>();
   private       boolean         finished = false;
 
-  public Frame(int id) {
-    this(id, 2);
+  public Frame() {
+    this(false);
   }
-  public Frame(int id, int maxRolls) {
-    this.id       = id;
-    this.maxRolls = maxRolls;
+  public Frame(boolean lastFrame) {
+    this.lastFrame = lastFrame;
   }
 
   public void addRoll(int knockedDownPins) {
-    if (isRollAllowed() && !isFinished()) {
+    if (isRollAllowed()) { //  && !isFinished()
       //rolls.add(new Roll(rolls.size() + 1, knockedDownPins));
       rolls.add(new Roll(knockedDownPins));
       if (isLastRollOfFrame()) {
@@ -50,12 +48,9 @@ public final class Frame {
     if (isStrike()) {
       return false;
     }
-    Roll firstRoll;
-    Roll secondRoll;
-
     try {
-      firstRoll  = rolls.get(0);
-      secondRoll = rolls.get(1);
+      Roll firstRoll  = rolls.get(0);
+      Roll secondRoll = rolls.get(1);
       return (firstRoll.getKnockedDownPins() + secondRoll.getKnockedDownPins() == 10);
     }
     catch (IndexOutOfBoundsException e) {
@@ -68,11 +63,11 @@ public final class Frame {
   }
 
   private boolean isRollAllowed() {
-    return (rolls.size() <= 1) || (id == 10 && (isStrike() || isSpare())); // todo == maxrolls?
+    return (rolls.size() <= 1) || (lastFrame && (isStrike() || isSpare()) && !isFinished());
   }
 
   private boolean isLastRollOfFrame() {
-    return ((rolls.size() == 2 && maxRolls == 2) || rolls.size() == 3 && maxRolls == 3 || (maxRolls == 3 && rolls.size() == 2 && !isSpare() && !isStrike() ));
+    return ((rolls.size() == 2 && !lastFrame) || rolls.size() == 3 && lastFrame || (lastFrame && rolls.size() == 2 && !isSpare() && !isStrike()));
   }
 }
 

@@ -1,5 +1,6 @@
 package org;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,9 +14,13 @@ import static org.junit.jupiter.api.Assertions.fail;
 public final class FrameTest {
    Frame frame;
 
+   @BeforeEach
+   void setupFrame() {
+     frame = new Frame(false);
+   }
+
   @Test
   void addRollAndGetRoll_normalRollsAreAdded_isReturnedCorrectly() {
-    frame = new Frame(1);
     int knockedDownPins = 4;
 
     frame.addRoll(knockedDownPins);
@@ -27,7 +32,6 @@ public final class FrameTest {
 
   @Test
   void addRoll_rollThreeTimesInARow_exceptionIsThrown() {
-    frame = new Frame(1);
     int knockedDownPins = 3;
 
     frame.addRoll(knockedDownPins);
@@ -42,7 +46,6 @@ public final class FrameTest {
 
   @Test
   void addRoll_rollAfterStrikeNotLastRound_exceptionIsThrown() {
-    frame = new Frame(1);
     int knockedDownPins = 3;
 
     frame.addRoll(10);
@@ -56,7 +59,7 @@ public final class FrameTest {
 
   @Test
   void addRoll_rollAfterStrikeLastRound_noExceptionIsThrown() {
-    frame = new Frame(10, 3);
+    frame = new Frame(true);
     int knockedDownPins = 3;
 
     frame.addRoll(10);
@@ -68,7 +71,6 @@ public final class FrameTest {
 
   @Test
   void isStrikeAndIsSpare_noStrikeOrSpare_isFalse() {
-    frame = new Frame(1);
     int knockedDownPins = 4;
 
     frame.addRoll(knockedDownPins);
@@ -80,7 +82,6 @@ public final class FrameTest {
 
   @Test
   void isStrikeAndIsSpare_Strike_isTrueAndFalse() {
-    frame = new Frame(1);
     int knockedDownPins = 10;
 
     frame.addRoll(knockedDownPins);
@@ -91,7 +92,6 @@ public final class FrameTest {
 
   @Test
   void isStrikeAndIsSpare_Spare_isFalseAndTrue() {
-    frame = new Frame(1);
     int knockedDownPins = 10;
 
     frame.addRoll(0);
@@ -102,9 +102,7 @@ public final class FrameTest {
   }
 
   @Test
-  void isStrikeAndIsSpare_noRollYet_isFalse() {
-    frame = new Frame(1);
-
+  void isStrikeAndIsSpare_noRollsYet_isFalse() {
     assertFalse(frame.isSpare());
     assertFalse(frame.isStrike());
   }

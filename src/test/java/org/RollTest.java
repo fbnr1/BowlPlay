@@ -5,16 +5,8 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
-/**
- * @author FabianR
- */
 public final class RollTest {
   Roll roll;
-
-  /*@BeforeEach
-  void createRoll() {
-    roll = new Roll(10);
-  }*/
 
   @Test
   void getKnockedDownPins_normalValue_correctValueReturned() {
