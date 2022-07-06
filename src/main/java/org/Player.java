@@ -44,9 +44,9 @@ public class Player{
   private void startNextFrame() {
     if (frames.size() < TOTAL_FRAMES) {
         if (frames.size() == TOTAL_FRAMES - 1)
-          frames.add(new Frame(TOTAL_FRAMES, 3));
+          frames.add(new Frame(true));
         else
-          frames.add(new Frame(frames.size() + 1));
+          frames.add(new Frame(false));
     }
   }
   // todo FabianR : reset frames
