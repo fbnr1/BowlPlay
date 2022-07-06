@@ -21,6 +21,15 @@ public class Player{
     return name;
   }
 
+  public int getCurrentRollNumber() {
+    int counter = 0;
+    for (Frame frame : frames) {
+      for (Roll roll : frame.getRolls())
+        counter++;
+    }
+    return counter;
+  }
+
   public int getCurrentScore() {
     return ScoreCalculator.calculateCurrentScore(frames);
   }
@@ -42,11 +51,7 @@ public class Player{
   }
   // todo FabianR : reset frames
 
-  private boolean isLastFrameFinished() {
-    /*for (Frame frame : frames)
-      if(!frame.isFinished())
-        return false;
-    return true;*/
-    return frames.size() <= 0 || frames.get(frames.size() - 1).isFinished();
+  public boolean isLastFrameFinished() {
+    return frames.size() == 0 || frames.get(frames.size() - 1).isFinished();
   }
 }
