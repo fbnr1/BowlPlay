@@ -16,7 +16,7 @@ public final class FrameTest {
 
    @BeforeEach
    void setupFrame() {
-     frame = new Frame(false);
+     frame = new Frame();
    }
 
   @Test
@@ -64,9 +64,11 @@ public final class FrameTest {
 
     frame.addRoll(10);
     frame.addRoll(knockedDownPins);
+    frame.addRoll(knockedDownPins + 1);
 
     assertEquals(frame.getRolls().get(0).getKnockedDownPins(), 10);
-    assertEquals(frame.getRolls().get(2).getKnockedDownPins(), knockedDownPins);
+    assertEquals(frame.getRolls().get(1).getKnockedDownPins(), knockedDownPins);
+    assertEquals(frame.getRolls().get(2).getKnockedDownPins(), knockedDownPins + 1);
   }
 
   @Test

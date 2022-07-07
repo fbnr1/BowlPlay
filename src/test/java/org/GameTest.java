@@ -75,6 +75,22 @@ class GameTest {
     }
   }
 
+  @Test
+  void roll_twoPlayersRollFortyTimesInTotal_NoError() {
+    game.addPlayer("Tom");
+    //game.addPlayer("Max");
+    game.start();
 
+    for (int i = 1; i <= 18; i++) {
+      game.roll(5);
+    }
+    game.roll(10);
+    game.roll(9);
+    game.roll(1);
+    for (Player player : game.getScore().keySet()) {
+      System.out.println(player.getName() + ": " + game.getScore().get(player));
+    }
+    assertEquals(game.getPlayers().get(0).getCurrentScore(), 160);
+  }
 }
 

@@ -154,5 +154,14 @@ class PlayerTest {
     assertEquals(106, playerOne.getCurrentScore());
   }
 
+  @Test
+  void getCurrentScore_StrikeInLastRound_threeRollsInLastRound(){
+    for (int i = 1; i <= 18; i++) {
+      playerOne.roll(4);
+    }
+    playerOne.roll(10);
+    playerOne.roll(4);
+    System.out.println(playerOne.getCurrentScore());
+  }
 }
 
