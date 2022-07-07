@@ -3,7 +3,7 @@ package org;
 import java.util.ArrayList;
 
 public class Player{
-  private final int TOTAL_FRAMES; // todo keine const? &&& nicht hier sondern in game festlegen?
+  private final int    TOTAL_FRAMES;
   private final String name;
   private final ArrayList<Frame> frames = new ArrayList<>();
 
@@ -12,41 +12,41 @@ public class Player{
   }
 
   public Player(String name, int totalFrames) {
+    if (totalFrames < 1) {
+      throw new IllegalArgumentException("Total frames must be at least 1");
+    }
     this.TOTAL_FRAMES = totalFrames;
-    this.name = name;
-
+    this.name         = name;
   }
 
   public String getName() {
-    return name;
+    return this.name;
   }
 
-/*  public int getCurrentRollNumber() {
-    int counter = 0;
-    for (Frame frame : frames) {
-      for (Roll roll : frame.getRolls())
-        counter++;
-    }
-    return counter;
-  }*/
-
   public int getCurrentScore() {
-    return ScoreCalculator.calculateCurrentScore(frames);
+    return getScoreUntilFrame(this.frames.size());
+  }
+
+  public int getScoreUntilFrame(int frameIndex) {
+    return ScoreCalculator.calculateScoreUntilFrame(frameIndex, this.frames);
   }
 
   public void roll(int knockedDownPins){
-    if (isLastFrameFinished()) {
+    if (frames.size() == 0 || isCurrentFrameFinished()) {
       startNextFrame();
     }
     frames.get(frames.size() - 1).addRoll(knockedDownPins);
   }
 
-  public boolean isLastFrameFinished() {
-    return frames.size() == 0 || frames.get(frames.size() - 1).isFinished();
+  public boolean isCurrentFrameFinished() {
+    if (frames.size() == 0) {
+      return false;
+    }
+    return frames.get(frames.size() - 1).isFinished();
   }
 
   public boolean isGameFinished() {
-    return frames.size() == TOTAL_FRAMES && isLastFrameFinished();
+    return frames.size() == TOTAL_FRAMES && isCurrentFrameFinished();
   }
 
   private void startNextFrame() {

@@ -5,19 +5,29 @@ import org.exceptions.GameIsOverException;
 import java.util.LinkedList;
 
 public class Game {
-  static final int MAX_PLAYERS = 5;
-  LinkedList<Player> players = new LinkedList<>();
-  Player  currentPlayer;
-  boolean firstRoundDone;
-  boolean gameStarted = false;
+  private final int                MAX_PLAYERS; // todo nicht hardcoden
+  private final        LinkedList<Player> players     = new LinkedList<>();
+  private              Player             currentPlayer;
+  //private boolean firstRoundDone = false;
+  private boolean gameStarted = false;
+
+  public Game(int maxPlayers) {
+    this.MAX_PLAYERS = maxPlayers;
+  }
+
+  public Game() {
+    this(5);
+  }
 
   public void start() {
-    if (hasValidAmountOfPlayers()) {
-      gameStarted = true;
-      currentPlayer = players.get(0);
+    if (gameStarted) {
+      throw new UnsupportedOperationException("The game has already started");
     }
-    else
-      throw new UnsupportedOperationException("Can't start game with less than 1 ore more than " + MAX_PLAYERS + " players");
+    if (!hasValidAmountOfPlayers()) {
+      throw new UnsupportedOperationException("Can't start game with less than 1 or more than " + MAX_PLAYERS + " players");
+    }
+    gameStarted = true;
+    currentPlayer = players.get(0);
   }
 
   public void addPlayer(String name) {
@@ -32,19 +42,20 @@ public class Game {
   }
 
   public void roll(int knockedDownPins) {
-    if(isGameOver())
+    if(isOver()) {
       throw new GameIsOverException("The game has already finished. Start a new Game to roll again");
-    if(!gameStarted)
+    }
+    if(!gameStarted) {
       throw new UnsupportedOperationException("The game hasn't started yet");
-    if (currentPlayer.isLastFrameFinished() && firstRoundDone) {
+    }
+    if (currentPlayer.isCurrentFrameFinished()) {
       int currentIndex = players.indexOf(currentPlayer);
-      currentPlayer = currentIndex + 1 >= players.size() ? players.get(0) : players.get(currentIndex + 1);
+      currentPlayer = currentPlayer.equals(players.getLast()) ? players.getFirst() : players.get(currentIndex + 1);
     }
     currentPlayer.roll(knockedDownPins);
-    firstRoundDone = true;
   }
 
-  public boolean isGameOver(){
+  public boolean isOver(){
     for (Player player : players) {
       if (!player.isGameFinished())
         return false;
@@ -53,16 +64,8 @@ public class Game {
   }
 
   public LinkedList<Player> getPlayers() {
-    return players;
+    return new LinkedList<>(players);
   }
-
-/*  public Map<Player, Integer> getScore() {
-    Map<Player, Integer> playerScores = new HashMap<>();
-    for (Player player : players) {
-      playerScores.put(player, player.getCurrentScore());
-    }
-    return  playerScores;
-  }*/
 
   private boolean hasValidAmountOfPlayers(){
     return players.size() > 0 && players.size() <= MAX_PLAYERS;

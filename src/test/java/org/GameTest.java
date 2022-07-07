@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import java.util.LinkedList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 class GameTest {
@@ -15,11 +17,11 @@ class GameTest {
 
   @BeforeEach
   void createGame() {
-    game = new Game();
+    game = new Game(6);
   }
 
   @Test
-  void getPlayers_PlayersAreReturnedCorrectly() {
+  void getPlayers_twoPlayersAreAdded_PlayersAreReturnedCorrectly() {
     Player player1 = new Player("Tom");
     Player player2 = new Player("Max");
 
@@ -45,7 +47,7 @@ class GameTest {
   @Test
   void start_SixPlayersInGame_exceptionIsThrown() {
     try {
-      for (int i = 0; i <= 5; i++) {
+      for (int i = 0; i < 7; i++) {
         game.addPlayer(""+ i);
       }
       game.start();
@@ -117,8 +119,9 @@ class GameTest {
         game.roll(4);
       }
     }
-    for (Player player : game.getPlayers())
+    for (Player player : game.getPlayers()) {
       assertEquals(80, player.getCurrentScore());
+    }
   }
 
   @Test
@@ -126,14 +129,22 @@ class GameTest {
     addFivePlayersToGame();
     game.start();
 
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= 9; i++) {
       for (Player ignored : game.getPlayers()) {
         game.roll(4);
         game.roll(4);
       }
     }
-    for (Player player : game.getPlayers())
-      assertEquals(80, player.getCurrentScore());
+    for (Player ignored : game.getPlayers()) {
+        game.roll(10);
+        game.roll(10);
+        game.roll(10);
+    }
+
+    for (Player player : game.getPlayers()) {
+      System.out.println(player.getName() + ": " + player.getCurrentScore());
+      assertEquals(102, player.getCurrentScore());
+    }
   }
 
   @Test
@@ -166,6 +177,64 @@ class GameTest {
       e.printStackTrace();
     }
   }
+
+  @Test
+  void roll_sixPlayersStrikeInLastRound_NoError() {
+    //game = new Game(6);
+    addFivePlayersToGame();
+    game.addPlayer("John");
+    game.start();
+
+    for (int i = 1; i <= 9; i++) {
+      for (Player ignored : game.getPlayers()) {
+        game.roll(4);
+        game.roll(4);
+      }
+    }
+    for (Player ignored : game.getPlayers()) {
+        game.roll(10);
+        game.roll(10);
+        game.roll(10);
+    }
+
+    for (Player player : game.getPlayers()) {
+      System.out.println(player.getName() + ": " + player.getCurrentScore());
+      assertEquals(102, player.getCurrentScore());
+    }
+  }
+
+  @Test
+  void isOver_TenFramesArePlayed_isOnlyTrueAtTheEnd() {
+    addFivePlayersToGame();
+    game.start();
+
+    for (int i = 1; i <= 9; i++) {
+      for (Player ignored : game.getPlayers()) {
+        game.roll(4);
+        game.roll(4);
+        assertFalse(game.isOver());
+      }
+    }
+    game.roll(4);
+    game.roll(4);
+
+    game.roll(4);
+    game.roll(4);
+
+    game.roll(4);
+    game.roll(4);
+
+    game.roll(4);
+    game.roll(4);
+
+    game.roll(4);
+    assertFalse(game.isOver());
+
+    game.roll(4);
+    assertTrue(game.isOver());
+  }
+
+
 
   private void addFivePlayersToGame() {
     game.addPlayer("Tom");

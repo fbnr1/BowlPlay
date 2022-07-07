@@ -3,13 +3,14 @@ package org;
 import java.util.ArrayList;
 
 public class ScoreCalculator {
-  public static int calculateCurrentScore(ArrayList<Frame> frames) {
+  public static int calculateScoreUntilFrame(int frameIndex, ArrayList<Frame> frames) {
     int[] knockedDownPins = convertFramesToPinsArray(frames);
     final int indexOfLastFrame = 18;
     int totalScore = 0;
     int frameScore;
+    int iterateUntilIndex = (frameIndex == 10) ? 21 : frameIndex * 2;
 
-    for (int i = 0; i < knockedDownPins.length; i++) {
+    for (int i = 0; i < iterateUntilIndex; i++) {
       // is last round/frame?
       if (i < indexOfLastFrame) {
         // is strike?
@@ -44,7 +45,7 @@ public class ScoreCalculator {
   }
 
   private static int[] convertFramesToPinsArray(ArrayList<Frame> frames) {
-    int[] knockedDownPins = frames.size() != 10 ?  new int[frames.size() * 2] : new int[21];
+    int[] knockedDownPins = frames.size() != 10 ? new int[frames.size() * 2] : new int[21];
     int counter = 0;
 
     for (Frame frame : frames) {

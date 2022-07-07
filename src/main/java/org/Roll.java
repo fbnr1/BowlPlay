@@ -4,8 +4,8 @@ public final class Roll {
   private final int knockedDownPins;
 
   public Roll(int knockedDownPins) {
-    int MAX_PINS = 10;
-    if (knockedDownPins < 0 || knockedDownPins > MAX_PINS)
+    final int maxPins = 10;
+    if (knockedDownPins < 0 || knockedDownPins > maxPins)
       throw new IllegalArgumentException();
     this.knockedDownPins = knockedDownPins;
   }

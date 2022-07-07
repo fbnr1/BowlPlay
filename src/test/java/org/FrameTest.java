@@ -109,5 +109,40 @@ public final class FrameTest {
     assertFalse(frame.isStrike());
   }
 
+  @Test
+  void isStrikeAndIsSpare_lastFrameSpareAndStrike_bothTrue() {
+     frame = new Frame(true);
+
+     frame.addRoll(5);
+     frame.addRoll(5);
+     frame.addRoll(10);
+
+     assertTrue(frame.isSpare());
+     assertTrue(frame.isStrike());
+  }
+
+  @Test
+  void isStrikeAndIsSpare_lastFrameStrikeAndSpare_bothTrue() {
+     frame = new Frame(true);
+
+     frame.addRoll(10);
+     frame.addRoll(5);
+     frame.addRoll(5);
+
+     assertTrue(frame.isSpare());
+     assertTrue(frame.isStrike());
+  }
+
+  @Test
+  void isStrikeAndIsSpare_lastFrameNoStrikeAndNoSpare_bothFalse() {
+     frame = new Frame(true);
+
+     frame.addRoll(4);
+     frame.addRoll(4);
+
+     assertFalse(frame.isSpare());
+     assertFalse(frame.isStrike());
+  }
+
 }
 

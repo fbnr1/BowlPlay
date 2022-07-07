@@ -5,6 +5,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 /**
@@ -164,6 +166,75 @@ class PlayerTest {
     playerOne.roll(10);
     playerOne.roll(4);
     System.out.println(playerOne.getCurrentScore());
+  }
+
+  @Test
+  void getCurrentScore_RandomRolls_scoreCorrectForEveryRound(){
+    playerOne.roll(1);
+    playerOne.roll(5);
+
+    playerOne.roll(10);
+
+    playerOne.roll(7);
+    playerOne.roll(2);
+
+    playerOne.roll(9);
+    playerOne.roll(1);
+
+    playerOne.roll(4);
+    playerOne.roll(3);
+
+    playerOne.roll(5);
+    playerOne.roll(5);
+
+    playerOne.roll(5);
+    playerOne.roll(5);
+
+    playerOne.roll(10);
+
+    playerOne.roll(10);
+
+    playerOne.roll(10);
+    playerOne.roll(5);
+    playerOne.roll(5);
+
+    assertEquals(6, playerOne.getScoreUntilFrame(1));
+    assertEquals(25, playerOne.getScoreUntilFrame(2));
+    assertEquals(34, playerOne.getScoreUntilFrame(3));
+    assertEquals(48, playerOne.getScoreUntilFrame(4));
+    assertEquals(55, playerOne.getScoreUntilFrame(5));
+    assertEquals(70, playerOne.getScoreUntilFrame(6));
+    assertEquals(90, playerOne.getScoreUntilFrame(7));
+    assertEquals(120, playerOne.getScoreUntilFrame(8));
+    assertEquals(145, playerOne.getScoreUntilFrame(9));
+    assertEquals(165, playerOne.getScoreUntilFrame(10));
+  }
+
+  @Test
+  void isCurrentFrameFinished_notFinished_falseReturned() {
+    assertFalse(playerOne.isCurrentFrameFinished());
+
+    playerOne.roll(4);
+
+    assertFalse(playerOne.isCurrentFrameFinished());
+
+    playerOne.roll(4);
+
+    assertTrue(playerOne.isCurrentFrameFinished());
+  }
+
+  @Test
+  void isGameFinished_onlyTrueAfterFinished() {
+    assertFalse(playerOne.isGameFinished());
+
+    playerOne.roll(4);
+    playerOne.roll(4);
+
+    assertFalse(playerOne.isGameFinished());
+    for (int i = 0; i < 18; i++) {
+      playerOne.roll(4);
+    }
+    assertTrue(playerOne.isGameFinished());
   }
 }
 
