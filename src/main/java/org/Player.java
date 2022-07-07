@@ -21,14 +21,14 @@ public class Player{
     return name;
   }
 
-  public int getCurrentRollNumber() {
+/*  public int getCurrentRollNumber() {
     int counter = 0;
     for (Frame frame : frames) {
       for (Roll roll : frame.getRolls())
         counter++;
     }
     return counter;
-  }
+  }*/
 
   public int getCurrentScore() {
     return ScoreCalculator.calculateCurrentScore(frames);

@@ -5,11 +5,13 @@ import java.util.ArrayList;
 public class ScoreCalculator {
   public static int calculateCurrentScore(ArrayList<Frame> frames) {
     int[] knockedDownPins = convertFramesToPinsArray(frames);
+    final int indexOfLastFrame = 18;
     int totalScore = 0;
     int frameScore;
 
     for (int i = 0; i < knockedDownPins.length; i++) {
-      if (i < 19) {
+      // is last round/frame?
+      if (i < indexOfLastFrame) {
         // is strike?
         if (knockedDownPins[i] == 10) {
           try {
@@ -22,8 +24,7 @@ public class ScoreCalculator {
           }
           catch (ArrayIndexOutOfBoundsException ignored) {
           }
-          // is second roll of frame?
-        }
+        } // is second roll of frame?
         else if (i % 2 == 1 && knockedDownPins[i - 1] != 10) {
           frameScore = knockedDownPins[i] + knockedDownPins[i - 1];
           // is spare?
@@ -43,7 +44,7 @@ public class ScoreCalculator {
   }
 
   private static int[] convertFramesToPinsArray(ArrayList<Frame> frames) {
-    int[] knockedDownPins = frames.size() != 10 ?  new int[frames.size() * 2] : new int[frames.size() * 2 + 1]; // todo maxsize (10) nicht hardcoden
+    int[] knockedDownPins = frames.size() != 10 ?  new int[frames.size() * 2] : new int[21];
     int counter = 0;
 
     for (Frame frame : frames) {

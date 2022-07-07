@@ -1,6 +1,7 @@
 package org;
 
 
+import org.exceptions.GameIsOverException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -76,21 +77,102 @@ class GameTest {
   }
 
   @Test
-  void roll_twoPlayersRollFortyTimesInTotal_NoError() {
+  void roll_onePlayerStrikePlusTwoRollsInLastRound_NoError() {
     game.addPlayer("Tom");
-    //game.addPlayer("Max");
     game.start();
 
     for (int i = 1; i <= 18; i++) {
       game.roll(5);
     }
     game.roll(10);
-    game.roll(9);
-    game.roll(1);
-    for (Player player : game.getScore().keySet()) {
-      System.out.println(player.getName() + ": " + game.getScore().get(player));
+    assertEquals(150, game.getPlayers().get(0).getCurrentScore());
+    game.roll(8);
+    assertEquals(158, game.getPlayers().get(0).getCurrentScore());
+    game.roll(2);
+    assertEquals(160, game.getPlayers().get(0).getCurrentScore());
+  }
+
+  @Test
+  void roll_onePlayerSparePlusOneRollInLastRound_NoError() {
+    game.addPlayer("Tom");
+    game.start();
+
+    for (int i = 1; i <= 18; i++) {
+      game.roll(5);
     }
-    assertEquals(game.getPlayers().get(0).getCurrentScore(), 160);
+    game.roll(5);
+    game.roll(5);
+    game.roll(10);
+    assertEquals(155, game.getPlayers().get(0).getCurrentScore());
+  }
+
+  @Test
+  void roll_fivePlayersNormalRolls_NoError() {
+    addFivePlayersToGame();
+    game.start();
+
+    for (int i = 1; i <= 10; i++) {
+      for (Player ignored : game.getPlayers()) {
+        game.roll(4);
+        game.roll(4);
+      }
+    }
+    for (Player player : game.getPlayers())
+      assertEquals(80, player.getCurrentScore());
+  }
+
+  @Test
+  void roll_fivePlayersStrikeInLastRound_NoError() {
+    addFivePlayersToGame();
+    game.start();
+
+    for (int i = 1; i <= 10; i++) {
+      for (Player ignored : game.getPlayers()) {
+        game.roll(4);
+        game.roll(4);
+      }
+    }
+    for (Player player : game.getPlayers())
+      assertEquals(80, player.getCurrentScore());
+  }
+
+  @Test
+  void roll_RollAfterGameIsOver_exceptionIsThrown() {
+    addFivePlayersToGame();
+    game.start();
+
+    for (int i = 1; i <= 10; i++) {
+      for (Player ignored : game.getPlayers()) {
+        game.roll(4);
+        game.roll(4);
+      }
+    }
+    try {
+      game.roll(5);
+      fail("It shouldn't be allowed to roll after game has finished");
+    } catch (GameIsOverException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Test
+  void roll_RollBeforeGameHasStarted_exceptionIsThrown() {
+    addFivePlayersToGame();
+
+    try {
+      game.roll(5);
+      fail("It shouldn't be allowed to roll before game has finished");
+    } catch (UnsupportedOperationException e) {
+      e.printStackTrace();
+    }
+  }
+
+  private void addFivePlayersToGame() {
+    game.addPlayer("Tom");
+    game.addPlayer("Max");
+    game.addPlayer("Pascal");
+    game.addPlayer("Fabian");
+    game.addPlayer("Anna");
   }
 }
 
