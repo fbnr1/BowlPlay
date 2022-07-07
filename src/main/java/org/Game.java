@@ -2,7 +2,9 @@ package org;
 
 import org.exceptions.GameIsOverException;
 
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class Game {
   static final int MAX_PLAYERS = 5;
@@ -32,15 +34,16 @@ public class Game {
   }
 
   public void roll(int knockedDownPins) {
-    if(!isGameOver()) {
-      if (currentPlayer.isLastFrameFinished() && firstRound) {
-        int currentIndex = players.indexOf(currentPlayer);
-        currentPlayer = currentIndex + 1 >= players.size() ? players.get(0) : players.get(currentIndex + 1);
-      }
-      currentPlayer.roll(knockedDownPins);
-      firstRound = true;
-    } else
+    if(isGameOver())
       throw new GameIsOverException();
+    if(!gameStarted)
+      throw new UnsupportedOperationException("The game hasn't started yet");
+    if (currentPlayer.isLastFrameFinished() && firstRound) {
+      int currentIndex = players.indexOf(currentPlayer);
+      currentPlayer = currentIndex + 1 >= players.size() ? players.get(0) : players.get(currentIndex + 1);
+    }
+    currentPlayer.roll(knockedDownPins);
+    firstRound = true;
   }
 
   public boolean isGameOver(){
@@ -52,9 +55,18 @@ public class Game {
 
     return  gameOver;
   }
+  // todo FabianR : letzter wurf bei strike kann noch 2 mal geworfen werden
 
   public LinkedList<Player> getPlayers() {
     return players;
+  }
+
+  public Map<Player, Integer> getScore() {
+    Map<Player, Integer> playerScores = new HashMap<>();
+    for (Player player : players) {
+      playerScores.put(player, player.getCurrentScore());
+    }
+    return  playerScores;
   }
 
   private boolean hasValidAmountOfPlayers(){

@@ -9,28 +9,31 @@ public class ScoreCalculator {
     int frameScore;
 
     for (int i = 0; i < knockedDownPins.length; i++) {
-      // is strike?
-      if (knockedDownPins[i] == 10) {
-        try {
-          // add next two rolls to score
-          totalScore += knockedDownPins[i + 2];
-          if (knockedDownPins[i + 2] != 10)
-            totalScore += knockedDownPins[i + 3];
-          else
-            totalScore += knockedDownPins[i + 4];
-        }
-        catch (ArrayIndexOutOfBoundsException ignored) {
-        }
-        // is second roll of frame?
-      } else if (i % 2 == 1 && knockedDownPins[i - 1] != 10) {
-        frameScore = knockedDownPins[i] + knockedDownPins[i - 1];
-        // is spare?
-        if (frameScore == 10) {
+      if (i < 19) {
+        // is strike?
+        if (knockedDownPins[i] == 10) {
           try {
-            // add next roll to score
-            totalScore += knockedDownPins[i + 1];
+            // add next two rolls to score
+            totalScore += knockedDownPins[i + 2];
+            if (knockedDownPins[i + 2] != 10)
+              totalScore += knockedDownPins[i + 3];
+            else
+              totalScore += knockedDownPins[i + 4];
           }
           catch (ArrayIndexOutOfBoundsException ignored) {
+          }
+          // is second roll of frame?
+        }
+        else if (i % 2 == 1 && knockedDownPins[i - 1] != 10) {
+          frameScore = knockedDownPins[i] + knockedDownPins[i - 1];
+          // is spare?
+          if (frameScore == 10) {
+            try {
+              // add next roll to score
+              totalScore += knockedDownPins[i + 1];
+            }
+            catch (ArrayIndexOutOfBoundsException ignored) {
+            }
           }
         }
       }

@@ -22,7 +22,7 @@ public final class Frame {
       if (isLastRollOfFrame()) {
         finished = true;
       }
-      if (!finished && knockedDownPins == 10)
+      if (!finished && knockedDownPins == 10 && !lastFrame)
         addRoll(0);
     }
     else {

@@ -46,7 +46,7 @@ public class Player{
   }
 
   public boolean isGameFinished() {
-    return getCurrentScore() == TOTAL_FRAMES && isLastFrameFinished();
+    return frames.size() == TOTAL_FRAMES && isLastFrameFinished();
   }
 
   private void startNextFrame() {
@@ -54,7 +54,7 @@ public class Player{
         if (frames.size() == TOTAL_FRAMES - 1)
           frames.add(new Frame(true));
         else
-          frames.add(new Frame(false));
+          frames.add(new Frame());
     }
   }
 }
