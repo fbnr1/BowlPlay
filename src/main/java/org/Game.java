@@ -5,10 +5,9 @@ import org.exceptions.GameIsOverException;
 import java.util.LinkedList;
 
 public class Game {
-  private final int                MAX_PLAYERS; // todo nicht hardcoden
+  private final int                MAX_PLAYERS;
   private final        LinkedList<Player> players     = new LinkedList<>();
   private              Player             currentPlayer;
-  //private boolean firstRoundDone = false;
   private boolean gameStarted = false;
 
   public Game(int maxPlayers) {
@@ -41,7 +40,7 @@ public class Game {
       throw new UnsupportedOperationException("Can't add player after game has started");
   }
 
-  public void roll(int knockedDownPins) {
+  public void roll(int knockedDownPins) throws IndexOutOfBoundsException, IllegalArgumentException {
     if(isOver()) {
       throw new GameIsOverException("The game has already finished. Start a new Game to roll again");
     }
@@ -52,10 +51,10 @@ public class Game {
       int currentIndex = players.indexOf(currentPlayer);
       currentPlayer = currentPlayer.equals(players.getLast()) ? players.getFirst() : players.get(currentIndex + 1);
     }
-    currentPlayer.roll(knockedDownPins);
+      currentPlayer.roll(knockedDownPins);
   }
 
-  public boolean isOver(){
+  public boolean isOver() {
     for (Player player : players) {
       if (!player.isGameFinished())
         return false;

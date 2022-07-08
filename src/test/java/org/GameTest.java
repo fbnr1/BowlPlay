@@ -142,7 +142,6 @@ class GameTest {
     }
 
     for (Player player : game.getPlayers()) {
-      System.out.println(player.getName() + ": " + player.getCurrentScore());
       assertEquals(102, player.getCurrentScore());
     }
   }
@@ -233,8 +232,6 @@ class GameTest {
     game.roll(4);
     assertTrue(game.isOver());
   }
-
-
 
   private void addFivePlayersToGame() {
     game.addPlayer("Tom");

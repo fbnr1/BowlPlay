@@ -72,11 +72,11 @@ class PlayerTest {
     playerOne.roll(5);
     assertEquals(55, playerOne.getCurrentScore());
     playerOne.roll(4);
-    playerOne.roll(8);
-    assertEquals(67, playerOne.getCurrentScore());
+    playerOne.roll(3);
+    assertEquals(62, playerOne.getCurrentScore());
     playerOne.roll(0);
     playerOne.roll(6);
-    assertEquals(73, playerOne.getCurrentScore());
+    assertEquals(68, playerOne.getCurrentScore());
   }
 
   @Test
@@ -99,7 +99,6 @@ class PlayerTest {
     playerOne.roll(4);
     playerOne.roll(0);
     assertEquals(48, playerOne.getCurrentScore());
-
   }
 
   @Test
@@ -133,7 +132,6 @@ class PlayerTest {
     playerOne.roll(2);
     playerOne.roll(4);
     assertEquals(147, playerOne.getCurrentScore());
-
   }
 
   @Test

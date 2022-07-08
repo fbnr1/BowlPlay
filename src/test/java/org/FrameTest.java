@@ -58,6 +58,35 @@ public final class FrameTest {
   }
 
   @Test
+  void addRoll_moreThanTenPinsKnockedDown_exceptionIsThrown() {
+    int knockedDownPins = 6;
+
+    frame.addRoll(knockedDownPins);
+    try {
+      frame.addRoll(knockedDownPins);
+      fail("It shouldn't be allowed to knock down more than ten pins in one round if it isn't the last round");
+    } catch (IllegalArgumentException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Test
+  void addRoll_threeStrikesInLastRound_NoExceptionIsThrown() {
+    frame = new Frame(true);
+    frame.addRoll(10);
+    frame.addRoll(10);
+    frame.addRoll(10);
+  }
+
+  @Test
+  void addRoll_spareAndTwoStrikesInLastRound_NoExceptionIsThrown() {
+    frame = new Frame(true);
+    frame.addRoll(5);
+    frame.addRoll(5);
+    frame.addRoll(10);
+  }
+
+  @Test
   void addRoll_rollAfterStrikeLastRound_noExceptionIsThrown() {
     frame = new Frame(true);
     int knockedDownPins = 3;

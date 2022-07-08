@@ -24,14 +24,15 @@ public class Player{
   }
 
   public int getCurrentScore() {
-    return getScoreUntilFrame(this.frames.size());
+    return getScoreUntilFrame(frames.size());
   }
 
   public int getScoreUntilFrame(int frameIndex) {
-    return ScoreCalculator.calculateScoreUntilFrame(frameIndex, this.frames);
+    IFScoreCalculator scoreCalculator = new ScoreCalculator();
+    return scoreCalculator.calculateScoreUntilFrame(frameIndex, frames);
   }
 
-  public void roll(int knockedDownPins){
+  public void roll(int knockedDownPins) throws IllegalArgumentException {
     if (frames.size() == 0 || isCurrentFrameFinished()) {
       startNextFrame();
     }
@@ -49,12 +50,17 @@ public class Player{
     return frames.size() == TOTAL_FRAMES && isCurrentFrameFinished();
   }
 
+  public int getCurrentFrameIndex() {
+    return frames.size();
+  }
   private void startNextFrame() {
     if (frames.size() < TOTAL_FRAMES) {
-        if (frames.size() == TOTAL_FRAMES - 1)
+        if (frames.size() == TOTAL_FRAMES - 1) {
           frames.add(new Frame(true));
-        else
+        }
+        else {
           frames.add(new Frame());
+        }
     }
   }
 }

@@ -22,6 +22,9 @@ public final class Frame {
     if (!isRollAllowed()) {
       throw new IndexOutOfBoundsException("The maximum amount of rolls in this frame has been reached.");
     }
+    if (!isAmountOfPinsValid(knockedDownPins)) {
+      throw new IllegalArgumentException("The maximum amount of pins to knock down in one frame is 10 (or 30 in the last frame)");
+    }
     rolls.add(new Roll(knockedDownPins));
     if (isLastRollOfFrame()) {
         finished = true;
@@ -70,6 +73,36 @@ public final class Frame {
 
   public boolean isFinished() {
     return finished;
+  }
+
+  private boolean isAmountOfPinsValid(int knockedDownPins) {
+    boolean hasZeroRolls  = rolls.size() == 0;
+    boolean hasOneRoll    = rolls.size() == 1;
+    boolean hasTwoRolls   = rolls.size() == 2;
+
+    if (10 < knockedDownPins) {
+      return false;
+    }
+    if (hasZeroRolls) {
+      return true;
+    }
+    if (!lastFrame) {
+      if (hasTwoRolls) {
+        return false;
+      }
+      return (rolls.get(0).getKnockedDownPins() + knockedDownPins) <= 10;
+    }
+    else {
+      if (hasOneRoll) {
+        return isRollStrike(0)
+               || rolls.get(0).getKnockedDownPins() + knockedDownPins <= 10;
+      }
+      if (hasTwoRolls) {
+        return isRollStrike(0)
+               || rolls.get(0).getKnockedDownPins() + rolls.get(1).getKnockedDownPins() == 10;
+      }
+    }
+    return false;
   }
 
   private boolean isRollAllowed() {
