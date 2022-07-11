@@ -13,6 +13,7 @@ Dabei gibt es Sonderfälle, welche vor allem einen Einfluss auf die Punktzählwe
 sind Strike und Spare, welche eintreffen, wenn in einem Durchgang alle 10 Pins umgeworfen werden. Das Spiel kann von mindestens einer und 
 maximal fünf Personen gleichzeitig gespielt werden.
 
+
 Die wichtigsten features:
 - Hinzufügen von Spielern 
 - Spielerbegrenzung (mind. 1 - max. 5) 
@@ -21,6 +22,7 @@ Die wichtigsten features:
 - Berechnung des Punktestandes 
 - Kontrolle der Sonderfälle (Strike & Spare) sowie die entsprechende besondere Zählweise 
 - Überprüfung des Spielendes
+- 
 
 Die interessantesten Probleme die wir hatten:
 - die verkettete Zählweise der Punkte bei Sonderwürfen (Strike und Spare) -> doppelte Punktzahl in 1/2 nächsten Würfen
