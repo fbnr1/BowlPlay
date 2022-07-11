@@ -1,70 +1,47 @@
-# HWR OOP Lecture Project Template
-
-[TODO]: # (Change README.md Headline to better fit to your project!)
+# BowlPlay [HWR OOP]
 
 This repository contains a student project created for an ongoing lecture on object-oriented programming with Java at HWR Berlin (summer term 2022).
 
 > :warning: This code is for educational purpose only. Do not rely on it!
 
-## Abstract
 
-[TODO]: # (Write a short description of your project.)
-[TODO]: # (State most important features.)
-[TODO]: # (State the most interesting problems you encountered during the project.)
+## Abstract
+Unser Projekt bezieht sich das Spiel Bowling, in Anlehnung an das BowlingKata (https://ccd-school.de/coding-dojo/class-katas/bowling/). 
+Dabei geht es darum, in 10 Durchgängen (Frames), in der Regel bestehend aus jeweils 2 Würfen (Rolls), mit einem Ball möglichst viele Pins umzuwerfen. 
+Es stehen maximal 10 Pins pro Durchgang zum Umwerfen zur Verfügung. Bei normaler Zählweise der Punkte entspricht ein umgeworfener Pin einem Punkt. 
+Dabei gibt es Sonderfälle, welche vor allem einen Einfluss auf die Punktzählweise oder die Wurfanzahl haben. Diese Sonderfälle 
+sind Strike und Spare, welche eintreffen, wenn in einem Durchgang alle 10 Pins umgeworfen werden. Das Spiel kann von mindestens einer und 
+maximal fünf Personen gleichzeitig gespielt werden.
+
+Die wichtigsten features:
+- Hinzufügen von Spielern 
+- Spielerbegrenzung (mind. 1 - max. 5) 
+- Kontrolle des Wurfrechts und Zählung der Durchgänge bzw. Würfe 
+- Überprüfung ob regelkonformer Wurf 
+- Berechnung des Punktestandes 
+- Kontrolle der Sonderfälle (Strike & Spare) sowie die entsprechende besondere Zählweise 
+- Überprüfung des Spielendes
+
+Die interessantesten Probleme die wir hatten:
+- die verkettete Zählweise der Punkte bei Sonderwürfen (Strike und Spare) -> doppelte Punktzahl in 1/2 nächsten Würfen
+- der Entstehungsprozess, von einem realen Problem zu einem fertigen Programm
+- Modellierung der Klassen und Objekte und das Zusammenwirken dieser
+- Komplizierte Berechnung der Punktzahlen
+
 
 ## Feature List
 
-[TODO]: # (For each feature implemented, add a row to the table!)
-
-| Number | Feature | Tests |
-|--------|---------|-------|
-| 1      | /       | /     |
+| Number | Feature         | Tests           |
+|--------|-----------------|-----------------|
+| 1      | Game            | GameTest (13)   |
+| 2      | Player          | PlayerTest (12) |
+| 3      | ScoreCalculator | PlayerTest (12) |
+| 4      | Frame           | FrameTest (14)  |
+| 5      | Roll            | RollTest (3)    |
 
 
 ## Additional Dependencies
 
-[TODO]: # (For each additional dependency your project requires- Add an additional row to the table!)
-
 | Number | Dependency Name | Dependency Description | Why is it necessary? |
 |--------|-----------------|------------------------|----------------------|
 | 1      | /               | /                      | /                    |
-
-## Instructions
-
-[TODO]: # (Remove these instructions once you finished your fork's setup.)
-
-Use a fork of this repository to do implement your project.
-
-Remember to add this repository as a second remote repository (upstream) and pull from the correct remotes.
-This is necessary, because we might apply changes to this template during the next month.
-
-The following section describes how to add multiple remote repositories to your local repository, which is cloned from the fork.
-
-### Multiple remote repositories
-
-Your local repository should have a reference to both the fork (your own remote repository) and the original remote repository.
-To configure your git remote repositories, use the `git remote` command set.
-
-1. Clone your fork and go enter the repository.
-```
-git clone <fork-url>
-cd <created-folder>
-```
-2. Now your fork is configured as primary remote repository (origin).
-Next to origin, you should add the original repository as a second remote repository (upstream).
-```
-git remote add upstream <repository-url>
-```
-3. Verify that both remotes are configured correctly.
-The following command should list both remotes: origin and upstream.
-```
-git remote -v
-```
-4. To fetch changes from all remote repositories, use:
-```
-git fetch --all
-```
-5. If there are interesting changes (in e.g. the `main` branch) to merge into your branch, use:
-```
-git pull upstream main
-```
